@@ -1,0 +1,15 @@
+{"entry_time": "2023-04-14T07:05:26.544444", "exit_time": "2023-09-10T07:05:52.379154", "entry_gate": 2, "exit_gate": 1, "veh": {"type": "bike", "color": "white", "number_plate": "MH83HG9437"}}
+{"entry_time": "2023-04-11T05:33:29.201179", "exit_time": "2023-09-13T05:21:50.770382", "entry_gate": 1, "exit_gate": 3, "veh": {"type": "truck", "color": "grey", "number_plate": "TS73CD8005"}}
+{"entry_time": "2023-04-13T00:38:59.942387", "exit_time": "2023-09-14T17:14:40.138048", "entry_gate": 2, "exit_gate": 2, "veh": {"type": "bike", "color": "red", "number_plate": "AP45YU4257"}}
+{"entry_time": "2023-04-12T10:11:18.499962", "exit_time": "2023-09-13T13:42:55.371987", "entry_gate": 3, "exit_gate": 1, "veh": {"type": "bike", "color": "red", "number_plate": "AP45YU4257"}}
+{"entry_time": "2023-04-11T12:33:58.458641", "exit_time": "2023-09-12T14:07:20.224968", "entry_gate": 1, "exit_gate": 2, "veh": {"type": "bike", "color": "grey", "number_plate": "TN97ER9322"}}
+{"entry_time": "2023-04-12T11:43:48.174757", "exit_time": "2023-09-11T20:22:04.026222", "entry_gate": 2, "exit_gate": 1, "veh": {"type": "bike", "color": "red", "number_plate": "AP45YU4257"}}
+{"entry_time": "2023-04-10T19:15:42.751271", "exit_time": "2023-09-14T03:10:44.719043", "entry_gate": 2, "exit_gate": 2, "veh": {"type": "bike", "color": "red", "number_plate": "KA03CD9647"}}
+{"entry_time": "2023-04-11T02:17:52.354760", "exit_time": "2023-09-13T02:38:21.599464", "entry_gate": 2, "exit_gate": 3, "veh": {"type": "truck", "color": "grey", "number_plate": "TS73CD8005"}}
+{"entry_time": "2023-04-12T14:46:19.159885", "exit_time": "2023-09-11T03:48:22.101270", "entry_gate": 1, "exit_gate": 2, "veh": {"type": "bike", "color": "red", "number_plate": "KA03CD9647"}}
+{"entry_time": "2023-04-10T14:48:25.566428", "exit_time": "2023-09-14T09:26:25.125642", "entry_gate": 2, "exit_gate": 1, "veh": {"type": "bike", "color": "grey", "number_plate": "TN97ER9322"}}
+{"entry_time": "2023-04-12T09:20:30.071038", "exit_time": "2023-09-10T03:29:29.629166", "entry_gate": 2, "exit_gate": 1, "veh": {"type": "bike", "color": "white", "number_plate": "MH83HG9437"}}
+{"entry_time": "2023-04-14T09:13:46.029864", "exit_time": "2023-09-10T20:03:24.438290", "entry_gate": 1, "exit_gate": 2, "veh": {"type": "bike", "color": "white", "number_plate": "MH83HG9437"}}
+{"entry_time": "2023-04-12T00:53:58.217145", "exit_time": "2023-09-11T11:47:15.811852", "entry_gate": 3, "exit_gate": 1, "veh": {"type": "truck", "color": "grey", "number_plate": "TS73CD8005"}}
+{"entry_time": "2023-04-14T17:28:15.340677", "exit_time": "2023-09-12T18:20:35.333001", "entry_gate": 2, "exit_gate": 3, "veh": {"type": "bike", "color": "grey", "number_plate": "TN97ER9322"}}
+{"entry_time": "2023-04-13T17:22:18.551320", "exit_time": "2023-09-14T11:18:47.052495", "entry_gate": 1, "exit_gate": 1, "veh": {"type": "bike", "color": "white", "number_plate": "MH83HG9437"}}
