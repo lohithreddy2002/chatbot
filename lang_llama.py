@@ -8,6 +8,7 @@ from langchain.chains.conversation.memory import ConversationBufferMemory
 from llama_index import GPTSQLStructStoreIndex, LLMPredictor, ServiceContext
 from llama_index import SQLDatabase as llama_SQLDatabase
 from llama_index.indices.struct_store import SQLContextContainerBuilder
+import os
 
 from constants import (
     DEFAULT_SQL_PATH,
@@ -90,7 +91,7 @@ llm_name = "text-davinci-003"
 model_temperature = 0
 use_table_descrp = True
 lc_descrp = ""
-api_key = "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"
+api_key = os.environ.get("OPENAI_API_KEY")
 
 
 
