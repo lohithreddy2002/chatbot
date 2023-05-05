@@ -5,15 +5,11 @@ from langchain.llms.openai import OpenAI
 from langchain.agents import AgentExecutor
 
 db = SQLDatabase.from_uri("sqlite:////home/lohith/chatbot/test.db")
-llm=OpenAI(temperature=0)
-toolkit = SQLDatabaseToolkit(db=db,llm=llm)
+llm = OpenAI(temperature=0)
+toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 
-agent_executor = create_sql_agent(
-    llm,
-    toolkit=toolkit,
-    verbose=True
-)
+agent_executor = create_sql_agent(llm, toolkit=toolkit, verbose=True)
 
 while True:
-    query = input()
+    query = input(">>")
     agent_executor.run(query)

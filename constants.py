@@ -1,18 +1,37 @@
 DEFAULT_SQL_PATH = "sqlite:////home/lohith/chatbot/test.db"
-DEFAULT_BUSINESS_TABLE_DESCRP = (
-    "This table gives information on the IDs, addresses, and other location "
-    "information for several restaurants in San Francisco. This table will "
-    "need to be referenced when users ask about specific businesses."
+DEFAULT_ENTRY_TABLE_DESCRP = (
+    "The entries table contains information about entries and exits from a facility"
+    "including the entry and exit times, the vehicle ID, and the entry and exit gates."
+    " entry time and exit time are stored in the format of 'YYYY-MM-DD HH:MM:SS.FFFFFF'"
+    "the user may query about entries on a specific date, then you should change the query date in to the Datetime format set the year by default to 2023 and run the query"
+    "The user may query about a specific entry in the table, whose vechile can be found by mapping the vehicle id to the 'vehicles' table."
 )
-DEFAULT_VIOLATIONS_TABLE_DESCRP = (
-    "This table gives information on which business IDs have recorded health violations, "
-    "including the date, risk, and description of each violation. The user may query "
-    "about specific businesses, whose names can be found by mapping the business_id "
-    "to the 'businesses' table."
+
+
+# (
+#     "The entries table contains information about entries and exits from a facility"
+#     "including the entry and exit times, the vehicle ID, and the entry and exit gates."
+#     " entry time and exit time are stored in the format of 'YYYY-MM-DD HH:MM:SS'"
+#     "the user may query about entries on a specific date, then you should change the query date in to the Datetime format and run the query"
+#     "The user may query about a specific entry in the table, whose vechile can be found by mapping the vehicle id to the 'vehicles' table."
+# )
+
+
+# (
+#     "The entries table contains information about entries and exits from a facility"
+#     "including the entry and exit times, the vehicle ID, and the entry and exit gates."
+#     " entry time and exit time are stored in the format of 'YYYY-MM-DD HH:MM:SS'"
+#     "The user may query about a specific entry in the table, whose vechile can be found by mapping the vehicle id to the 'vehicles' table."
+# )
+
+DEFAULT_VEHICLES_TABLE_DESCRP = (
+    "The vehicles table contains information about vehicles, including their ID, type, licence plate, and color."
+    "There are 3 different types of vehicles like car, bike and truck, the type of vehicle can be found by the 'type' column in the table"
+    "The user may query about specific vechile by the type or number_plate"
 )
-DEFAULT_INSPECTIONS_TABLE_DESCRP = (
-    "This table gives information on when each business ID was inspected, including "
-    "the score, date, and type of inspection. The user may query about specific "
-    "businesses, whose names can be found by mapping the business_id to the 'businesses' table."
+
+DEFAULT_VEHICLE_ENTRY_TABLE_DESCRP = (
+    "the vehicle entry table contains information about vehicles which entered a parking lot."
+    "There are 3 different types of vehicles like car, bike and truck, the type of vehicle can be found by the 'vehicle_type' column in the table"
+    "'parked_level' colum gives information about where the vehicle is parked, level 1 is also called first floor"
 )
-DEFAULT_LC_TOOL_DESCRP = "Useful for when you want to answer queries about violations and inspections of businesses."
