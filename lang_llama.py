@@ -17,6 +17,7 @@ from constants import (
     DEFAULT_VEHICLE_ENTRY_TABLE_DESCRP,
 )
 import os
+import re
 from langchain import OpenAI
 from langchain.chat_models import ChatOpenAI
 
@@ -30,11 +31,11 @@ def get_sql_index_tool(sql_index, table_context_dict):
         except Exception as e:
             return f"Error running SQL {e}.\nNot able to retrieve answer."
         text = str(response)
-        print(response.extra_info)
         sql = response.extra_info["sql_query"]
+        print("\033[1;31m [DEBUG] ",sql+" \033[00m")
         # return f"Here are the details on the SQL table: {table_context_str}\nSQL Query Used: {sql}\nSQL Result: {text}\n"
-        return f"SQL Query Used: {sql}\nSQL Result: {text}\n"
-        # return text
+        # return f"SQL Query Used: {sql}\nSQL Result: {text}\n"
+        return text
 
     return run_sql_index_query
 
@@ -114,5 +115,9 @@ agent = initialize_chain(llm_name, model_temperature, lc_descrp, api_key, llama_
 
 while True:
     query = input(">>")
+    match = re.findall(r'\D\D\d\d\D\D\d\d\d\d',query )
+    print('[DEBUG]: ',match)
+    for i in match:
+        query = query.replace(i,i.upper())
     response = agent.run(input=query)
-    # print(response)
+    

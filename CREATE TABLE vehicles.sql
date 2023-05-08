@@ -144,3 +144,44 @@ EXITS
 - gate_id (int, foreign key to GATES.id)
 - exit_datetime (datetime)
 "
+
+
+ ALTER TABLE vehicle_entries DROP COLUMN parked_duration 
+
+
+
+CREATE TABLE vehicle_entries_test(
+   ID INTEGER PRIMARY KEY AUTOINCREMENT,
+   entry_time DATETIME  NOT NULL,
+   exit_time DATETIME  NOT NULL,
+   number_plate VARCHAR(20) NOT NULL,
+   vehicle_type INT,
+   vehicle_color VARCHAR(20) NOT NULL,
+   parked_level INT
+);
+
+
+"
+car = 1
+bike = 2
+truck = 3
+"
+
+
+ INSERT INTO vehicle_entries_test(entry_time,exit_time,vehicle_type,number_plate, vehicle_color,parked_level)
+VALUES ('2023-04-14 07:05:26.544444','2023-09-10 07:05:52.379154',"bike","KA19EQ1316","black",1),
+('2023-05-11 05:33:29.201179','2023-05-13 05:21:50.770382',1,"TN37EF4902","white" ,2),
+('2023-05-13 00:38:59.942387','2023-05-14 17:14:40.138048',2,"HR26DQ5551","green",2),
+('2023-05-12 10:11:18.499962','2023-05-13 13:42:55.371987',3,"UP67AA3601","grey",1),
+('2023-05-11 12:33:58.458641','2023-05-12 14:07:20.224968',3,"MP15NC9738","blue",3),
+('2023-05-12 11:43:48.174757','2023-05-11 20:22:04.026222',2,"HR26DQ5551","green",4),
+('2023-05-10 19:15:42.751271','2023-05-14 03:10:44.719043',1,"TN37EF4902","white" ,4),
+('2023-05-11 02:17:52.354760','2023-05-13 02:38:21.599464',2,"HR26DQ5551","green",3),
+('2023-05-12 14:46:19.159885','2023-05-11 03:48:22.101270',3,"UP67AA3601","grey",1),
+('2023-05-10 14:48:25.566428','2023-05-14 09:26:25.125642',3,"MP15NC9738","blue",2),
+('2023-05-12 09:20:30.071038','2023-05-10 03:29:29.629166',1,"TN37EF4902","white" ,3),
+('2023-05-14 09:13:46.029864','2023-05-10 20:03:24.438290',2,"KA19EQ1316","black",4),
+('2023-05-12 00:53:58.217145','2023-05-11 11:47:15.811852',2,"HR26DQ5551","green",4),
+('2023-05-14 17:28:15.340677','2023-05-12 18:20:35.333001',1,"TN37EF4902","white" ,1),
+('2023-05-13 17:22:18.551320','2023-05-14 11:18:47.052495',2,"HR26DQ5551","green",3);
+
