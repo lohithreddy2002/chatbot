@@ -4,7 +4,8 @@ from sqlalchemy import create_engine
 
 from langchain.agents import Tool, initialize_agent
 from langchain.chains.conversation.memory import ConversationBufferMemory
-
+from langchain.callbacks import get_openai_callback
+from langchain.agents import AgentType
 from llama_index import GPTSQLStructStoreIndex, LLMPredictor, ServiceContext
 from llama_index import SQLDatabase as llama_SQLDatabase
 from llama_index.indices.struct_store import SQLContextContainerBuilder
@@ -20,14 +21,16 @@ import os
 import re
 from langchain import OpenAI
 from langchain.chat_models import ChatOpenAI
-
+import logging
+import sys
 
 def get_sql_index_tool(sql_index, table_context_dict):
     table_context_str = "\n".join(table_context_dict.values())
 
     def run_sql_index_query(query_text):
         try:
-            response = sql_index.query(query_text)
+            logging.basicConfig(level=logging.DEBUG,filename="logs.log")
+            response = sql_index.as_query_engine().query(query_text)
         except Exception as e:
             return f"Error running SQL {e}.\nNot able to retrieve answer."
         text = str(response)
@@ -84,7 +87,6 @@ def initialize_chain(llm_name, model_temperature, lc_descrp, api_key, _sql_index
         ),
         description=lc_descrp,
     )
-
     llm = get_llm(llm_name, model_temperature, api_key=api_key)
 
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
@@ -98,7 +100,7 @@ def initialize_chain(llm_name, model_temperature, lc_descrp, api_key, _sql_index
 llm_name = "text-davinci-003"
 model_temperature = 0
 use_table_descrp = True
-lc_descrp = ""
+lc_descrp = "this tool is used to run sql queries over data and get the output. reformat the output in a human readable form without any mention of the actual sql query"
 api_key = os.environ.get("OPENAI_API_KEY")
 
 
@@ -116,8 +118,13 @@ agent = initialize_chain(llm_name, model_temperature, lc_descrp, api_key, llama_
 while True:
     query = input(">>")
     match = re.findall(r'\D\D\d\d\D\D\d\d\d\d',query )
-    print('[DEBUG]: ',match)
     for i in match:
         query = query.replace(i,i.upper())
-    response = agent.run(input=query)
-    
+    with get_openai_callback() as cb:
+        response = agent.run(query)
+        print("response:",response)
+        print(f"Total Tokens: {cb.total_tokens}")
+        print(f"Prompt Tokens: {cb.prompt_tokens}")
+        print(f"Completion Tokens: {cb.completion_tokens}")
+        print(f"Total Cost (USD): ${cb.total_cost}")
+

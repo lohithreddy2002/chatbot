@@ -4,27 +4,31 @@ from llama_index.indices.struct_store import (
     SQLContextContainerBuilder,
     GPTSQLStructStoreIndex,
 )
+from constants import DEFAULT_VEHICLE_ENTRY_TABLE_DESCRP
+from llama_index.logger import LlamaLogger
+from llama_index import ServiceContext
 
 
 engine = create_engine("sqlite:////home/lohith/chatbot/test.db")
 metadata_obj = MetaData(bind=engine)
-sql_database = SQLDatabase(engine, include_tables=["vehicles", "entries"])
-entries_table_text = (
-    "This table gives information regarding the vehicles which entred the parking lot.\n"
-    "This table stores the entry time, exit time, entry gate and exit gate."
-)
-table_context_dict = {"entries": entries_table_text}
+sql_database = SQLDatabase(engine, include_tables=["vehicle_entries"])
+table_context_dict = {"vehicle_entries": DEFAULT_VEHICLE_ENTRY_TABLE_DESCRP}
 context_builder = SQLContextContainerBuilder(sql_database, table_context_dict)
 context_container = context_builder.build_context_container()
+llama_logger = LlamaLogger()
+service_context = ServiceContext.from_defaults(llama_logger=llama_logger)
 index = GPTSQLStructStoreIndex.from_documents(
     [],
     sql_database=sql_database,
-    table_name=["vehicles", "entries"],
+    table_name=["vehicle_entries"],
     sql_context_container=context_container,
+    service_context=service_context
 )
 query_engine = index
 while True:
-    query = input()
+    query = input(">>")
     response = query_engine.query(query)
-    print(response.extra_info["sql_query"])
+    sql = response.extra_info["sql_query"]
+    print("\033[1;31m [DEBUG] ",sql+" \033[00m")
     print(response)
+
