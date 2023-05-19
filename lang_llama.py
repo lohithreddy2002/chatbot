@@ -115,16 +115,16 @@ llama_index = initialize_index(
 )
 agent = initialize_chain(llm_name, model_temperature, lc_descrp, api_key, llama_index)
 
-while True:
-    query = input(">>")
-    match = re.findall(r'\D\D\d\d\D\D\d\d\d\d',query )
-    for i in match:
-        query = query.replace(i,i.upper())
-    with get_openai_callback() as cb:
-        response = agent.run(query)
-        print("response:",response)
-        print(f"Total Tokens: {cb.total_tokens}")
-        print(f"Prompt Tokens: {cb.prompt_tokens}")
-        print(f"Completion Tokens: {cb.completion_tokens}")
-        print(f"Total Cost (USD): ${cb.total_cost}")
+# while True:
+#     query = input(">>")
+#     match = re.findall(r'\D\D\d\d\D\D\d\d\d\d',query )
+#     for i in match:
+#         query = query.replace(i,i.upper())
+#     with get_openai_callback() as cb:
+#         response = agent.run(query)
+#         print("response:",response)
+#         print(f"Total Tokens: {cb.total_tokens}")
+#         print(f"Prompt Tokens: {cb.prompt_tokens}")
+#         print(f"Completion Tokens: {cb.completion_tokens}")
+#         print(f"Total Cost (USD): ${cb.total_cost}")
 

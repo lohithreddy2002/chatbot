@@ -24,13 +24,14 @@ context_container = context_builder.build_context_container()
 index = GPTSQLStructStoreIndex.from_documents(
     [], 
     sql_database=sql_database, 
-    table_name="city_stats",
+    table_name="vehicle_entries",
     sql_context_container = context_container
 )
 
-query_engine = index.as_query_engine()
-while True:
-    query = input(">>")
-    response = query_engine.query(query)
-    print(response.extra_info["sql_query"])
-    print(response)
+if __name__ == "__main__":
+    while True:
+        query_engine = index.as_query_engine()
+        query = input(">>")
+        response = query_engine.query(query)
+        print(response.extra_info["sql_query"])
+        print("answer: ",response)

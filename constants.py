@@ -34,21 +34,26 @@ DEFAULT_VEHICLES_TABLE_DESCRP = (
 )
 
 DEFAULT_VEHICLE_ENTRY_TABLE_DESCRP = (
-    # "Use the following pieces of context to answer the questions abouth the table. If you don't know the answer, just say that you don't know, don't try to make up an answer. "
-    "queries should not write into the database or change the database schema. Like DELETE, INSERT and CREATE should not be run."
-    "the vehicle entry table contains information about vehicles which entered a parking lot."
-    "the user may ask queries related to specific Date for which the the 'entry_time' should be converted into Date format. "
-    "the user may query about entries on a specific date and the year is not specfied, then you should change the query date in to the Datetime format set the year by default to 2023 and run the query. "
-    "There are 3 different types of vehicles car,bike and truck, the type of vehicle can be found by the 'vehicle_type' column in the table. "
-    "the user may query about a particular type of vehicle for which 'vehicle_type' column should be queried"
-    "'parked_level' column gives information about where the vehicle is parked, level 1 is also called first floor. "
-    "the entries with the same number_plate should be counted as a single entry. "
-    "Ignore the 'id' column when giving the reults. "
-    "when running queries related to dates use sqlite synatx only. "
+    "Use the following pieces of context to answer the questions abouth the table. If you don't know the answer, just say that you don't know, don't try to make up an answer. \n"
+    "the vehicle entry table contains information about vehicles in a parking lot. \n"
+    "the vehicle entry table contains colums 'entry_time','exit_time', 'number_plate', 'vehicle_type', 'vehicle_color', 'parked_level' \n"
+    "'entry_time' column gives information about when the vehicles have entered and 'exit_time' column gives information about when the vehicles left. \n"
+    "time is stored in the format of  r'%Y-%m-%d %H:%M:%S' the default year should be 2023. \n"
+    "There are 3 different types of vehicles in the database car,bike and truck, the type of vehicle can be found by the 'vehicle_type' column in the table. \n"
     "vehicle type and vehicle color is always in lower case. "
-    "time spent by a vehicle should be displayed in minutes. "
+    "'parked_level' column gives information about where the vehicle is parked, level 1 is also called first floor. "
     "vehicles should be described by the number plate"
-    "the queries which only want current date can use this date {} , for other queries this should not be used.".format(today)
+    "the entries with the same 'number_plate' should be counted as a single entry."
+
+
+
+    # "the user may ask queries related to specific Date for which the the 'entry_time' should be converted into Date format. "
+    # "the user may query about when the vehicle left or exited for which the 'exit_time' column should be queried"
+    # "the user may query about entries on a specific date and the year is not specfied, then you should change the query date in to the Datetime format set the year by default to 2023 and run the query. "
+    # "the user may query about a particular type of vehicle for which 'vehicle_type' column should be queried"
+    # "Ignore the 'id' column when giving the reults. "
+    # "time spent by a vehicle should be displayed in minutes. "
+    # "the queries which only want current date can use this date {} , for other queries this should not be used.".format(today)
 
    
 )
@@ -57,7 +62,7 @@ DEFAULT_VEHICLE_ENTRY_TABLE_DESCRP = (
 DEFAULT_VEHICLE_ENTRY_TABLE_TEST_DESCRP = (
     "queries should not write into the database or change the database schema. Like DELETE, INSERT and CREATE should not be run."
     "the vehicle entry table contains information about vehicles which entered a parking lot."
-    "the user may ask queries related to specific Date for which the the 'entry_time' should be converted into Date format. "
+    "the user may ask queries related to specific Date for which the the '`entry_time' should be converted into Date format. "
     "the user may query about entries on a specific date, then you should change the query date in to the Datetime format set the year by default to 2023 and run the query. "
     "There are 3 different types of vehicles like car, bike and truck, the type of vehicle can be found by the 'vehicle_type' column in the table if the vechicle_type value is"
     " 1 then it is car and if the value is 2 then it is a bike if the value is 3 then it is a Truck"

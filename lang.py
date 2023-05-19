@@ -3,13 +3,50 @@ from langchain.agents.agent_toolkits import SQLDatabaseToolkit
 from langchain.sql_database import SQLDatabase
 from langchain.llms.openai import OpenAI
 from langchain.agents import AgentExecutor
+from langchain.prompts.prompt import PromptTemplate
+from langchain.agents import Tool
+from langchain.agents import AgentType
+from langchain.memory import ConversationBufferMemory,ConversationBufferWindowMemory
+from langchain import OpenAI
+from langchain.utilities import SerpAPIWrapper
+from langchain.agents import initialize_agent
+from langchain.agents import Tool, AgentExecutor, BaseSingleActionAgent
+from langchain import OpenAI, SQLDatabase, SQLDatabaseChain
+from langchain.chains import SQLDatabaseSequentialChain
+from grapher import GraperTool
 
-db = SQLDatabase.from_uri("sqlite:////home/lohith/chatbot/example.db")
+from constants import DEFAULT_VEHICLE_ENTRY_TABLE_DESCRP
+db = SQLDatabase.from_uri("sqlite:////home/lohith/chatbot/test.db",include_tables=["vehicle_entries"])
 llm = OpenAI(temperature=0)
 toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 
-agent_executor = create_sql_agent(llm, toolkit=toolkit, verbose=True)
+
+
+db_chain = SQLDatabaseChain.from_llm(llm, db, verbose=True)
+
+conversational_memory = ConversationBufferWindowMemory(
+        memory_key='chat_history',
+        k=5,
+        return_messages=True
+)
+
+tools = [
+    Tool(
+        name = "SQL",
+        func=db_chain.run,
+        description="this tool is used to run sql queries over data and get the output. reformat the output in a human readable form without any mention of the actual sql query",
+    ),
+    GraperTool()
+]
+
+memory = ConversationBufferMemory(memory_key="chat_history")
+
+
+llm=OpenAI(temperature=0)
+agent_chain = initialize_agent(tools, llm,agent="chat-conversational-react-description", verbose=True,memory=conversational_memory)
+
 
 while True:
     query = input(">>")
-    agent_executor.run(query)
+    response = agent_chain.run(query)
+    print("answer = ",response)
