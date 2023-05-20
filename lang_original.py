@@ -7,7 +7,7 @@ from langchain.chains.conversation.memory import ConversationBufferMemory
 from langchain.agents import AgentExecutor
 from constants import DEFAULT_VEHICLE_ENTRY_TABLE_DESCRP
 import gradio as gr
-from langchain.agents.agent_toolkits.sql.toolkit import SQLDatabaseToolkit
+from grapher import SQLDatabaseToolkit
 from langchain.tools.python.tool import PythonREPLTool
 
 

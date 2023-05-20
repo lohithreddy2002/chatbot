@@ -19,16 +19,10 @@ from constants import DEFAULT_VEHICLE_ENTRY_TABLE_DESCRP
 db = SQLDatabase.from_uri("sqlite:////home/lohith/chatbot/test.db",include_tables=["vehicle_entries"])
 llm = OpenAI(temperature=0)
 toolkit = SQLDatabaseToolkit(db=db, llm=llm)
-
-
-
 db_chain = SQLDatabaseChain.from_llm(llm, db, verbose=True)
 
-conversational_memory = ConversationBufferWindowMemory(
-        memory_key='chat_history',
-        k=5,
-        return_messages=True
-)
+print(len(toolkit.get_tools()))
+
 
 tools = [
     Tool(
@@ -41,9 +35,7 @@ tools = [
 
 memory = ConversationBufferMemory(memory_key="chat_history")
 
-
-llm=OpenAI(temperature=0)
-agent_chain = initialize_agent(tools, llm,agent="chat-conversational-react-description", verbose=True,memory=conversational_memory)
+agent_chain = initialize_agent(tools, llm, verbose=True)
 
 
 while True:
