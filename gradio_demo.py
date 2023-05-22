@@ -9,7 +9,7 @@ import gradio as gr
 import os
 from llama_index import SQLDatabase
 from lang_llama import initialize_chain,initialize_index
-
+from langchain.callbacks import get_openai_callback
 from llama_index.indices.struct_store import SQLContextContainerBuilder
 from sqlalchemy import create_engine
 from llama_index.indices.struct_store import  GPTSQLStructStoreIndex
@@ -65,13 +65,17 @@ def llama():
 
     return query_engine
 
-
+total_money= 0
 
 with gr.Blocks() as demo:
     lang_llama_agent = lang_llama()
     lang_agent = lang()
     llama_agent = llama()
-    dropdown = gr.Dropdown(["lang_lama", "lang", "llama"], label="LLM Model")
+    with gr.Row():
+        with gr.Column(scale=0.6):
+            dropdown = gr.Dropdown(["lang_lama", "lang", "llama"], label="LLM Model")
+        with gr.Column(scale=0.4, min_width=0):
+            output_text = gr.Textbox(interactive=False,label="Cost")
     chatbot = gr.Chatbot([], label="AllGoBot",elem_id="chatbot").style(height=400)
     with gr.Row():
         with gr.Column(scale=0.85):
@@ -85,22 +89,27 @@ with gr.Blocks() as demo:
         chatbot.value = []
         return []
     dropdown.change(clear_bot)
-
-    def respond(message,dropdown, chat_history):
-        if dropdown == "lang_lama":
-            response= lang_llama_agent.run(message)
-            chat_history.append((message, response))
-        elif dropdown == "llama":
-            response = llama_agent.query(message)
-            chat_history.append((message, str(response)))
-        elif dropdown == "lang":
-            response = lang_agent.run(message)
-            chat_history.append((message, response))
-        else:
-            pass
-        return "",chat_history
+    def respond(message,dropdown, chat_history,total_money=total_money):
+        with get_openai_callback() as cb:
+            if dropdown == "lang_lama":
+                response= lang_llama_agent.run(message)
+                chat_history.append((message, response))
+            elif dropdown == "llama":
+                response = llama_agent.query(message)
+                chat_history.append((message, str(response)))
+            elif dropdown == "lang":
+                response = lang_agent.run(message)
+                chat_history.append((message, response))
+            else:
+                pass
+            print(f"Total Tokens: {cb.total_tokens}")
+            print(f"Prompt Tokens: {cb.prompt_tokens}")
+            print(f"Completion Tokens: {cb.completion_tokens}")
+            print(f"Total Cost (USD): ${cb.total_cost}")
+            total_money += cb.total_cost
+        return "",chat_history,total_money
     dropdown.change(lambda:None,None,chatbot)
-    msg.submit(respond, [msg,dropdown,chatbot], [msg, chatbot])
+    msg.submit(respond, [msg,dropdown,chatbot], [msg, chatbot,output_text])
     clear.click(lambda: None, None, chatbot, dropdown, queue=False)
 
 if __name__ == "__main__":
