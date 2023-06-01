@@ -13,7 +13,3 @@ pandas_ai = PandasAI(llm, conversational=False)
 # print(response)
 from lang_original import llm
 agent = create_pandas_dataframe_agent(llm,df,verbose=True)
-
-# agent.run("Plot the histogram of companies in Bulgaria showing for each number of employees, using different colors for each bar")
-
-df['Number of employees'].hist(color='blue')

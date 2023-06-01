@@ -45,10 +45,10 @@ def query_agent(agent, query):
     prompt = (
         """
             For the following query, if it requires drawing a table, reply as follows:
-            {"table": {"columns": ["column1", "column2", ...], "data": [[value1, value2, ...], [value1, value2, ...], ...]}}
+            {"table": {"columns": ["column1", "column2", ...], "data": [[column1 value, column1 value, ...], [column2 value,column2 value, ...], ...]}}
 
             If the query requires creating a bar chart, reply as follows:
-            {"bar": {"columns": ["A", "B", "C", ...], "data": [[12,12,12,12],[25, 24, 10, ...]}}
+            {"bar": {"columns": ["A", "B", "C", ...], "data": [[column1 value, column1 value, ...], [column2 value,column2 value, ...], ...]}}
             Example:
             {"bar": {"columns": ["number plate", "time spent"], "data": [["AP03AB8638","KA03WE2345"],[25, 24]]}}
 
@@ -121,16 +121,33 @@ def write_response(response_dict: dict):
     # Check if the response is a bar chart.
     if "bar" in response_dict:
         data = response_dict["bar"]
-        df = pd.DataFrame(data)
-        df.set_index("columns", inplace=True)
-        st.bar_chart(df)
+        x = []
+        y = []
+        for i in data["data"]:
+            x.append(i[0])
+            y.append(i[1])
+        conv_data = {
+            data["columns"][0]:x,
+            data["columns"][1]:y
+        }
+        df = pd.DataFrame(conv_data)
+        # df.set_index("columns", inplace=True)
+        st.bar_chart(df,x=data["columns"][0],y=data["columns"][1])
 
     # Check if the response is a line chart.
     if "line" in response_dict:
         data = response_dict["line"]
-        df = pd.DataFrame(data)
-        df.set_index("columns", inplace=True)
-        st.line_chart(df)
+        x = []
+        y = []
+        for i in data["data"]:
+            x.append(i[0])
+            y.append(i[1])
+        conv_data = {
+            data["columns"][0]:x,
+            data["columns"][1]:y
+        }
+        df = pd.DataFrame(conv_data)
+        st.line_chart(df,x=data["columns"][0],y=data["columns"][1])
 
     # Check if the response is a table.
     if "table" in response_dict:
@@ -153,7 +170,6 @@ if st.button("Submit Query", type="primary"):
     # Query the agent.
     response = query_agent(agent=agent, query=query)
 
-    print("response",response)
     # Decode the response.
     decoded_response = decode_response(response)
 

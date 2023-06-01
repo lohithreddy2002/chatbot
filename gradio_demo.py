@@ -14,6 +14,7 @@ from llama_index.indices.struct_store import SQLContextContainerBuilder
 from sqlalchemy import create_engine
 from llama_index.indices.struct_store import  GPTSQLStructStoreIndex
 from constants import DEFAULT_VEHICLE_ENTRY_TABLE_DESCRP
+from test_a import agent
 
 
 def lang():
@@ -71,9 +72,10 @@ with gr.Blocks() as demo:
     lang_llama_agent = lang_llama()
     lang_agent = lang()
     llama_agent = llama()
+    csv_agent = agent
     with gr.Row():
         with gr.Column(scale=0.6):
-            dropdown = gr.Dropdown(["lang_lama", "lang", "llama"], label="LLM Model")
+            dropdown = gr.Dropdown(["lang_lama", "lang", "llama","csv agent"], label="LLM Model")
         with gr.Column(scale=0.4, min_width=0):
             output_text = gr.Textbox(interactive=False,label="Cost")
     chatbot = gr.Chatbot([], label="AllGoBot",elem_id="chatbot").style(height=400)
@@ -99,6 +101,9 @@ with gr.Blocks() as demo:
                 chat_history.append((message, str(response)))
             elif dropdown == "lang":
                 response = lang_agent.run(message)
+                chat_history.append((message, response))
+            elif dropdown == "csv agent":
+                response = csv_agent.run(message)
                 chat_history.append((message, response))
             else:
                 pass
